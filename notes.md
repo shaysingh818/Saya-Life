@@ -45,6 +45,8 @@ Water usage charges are dynamic and VARY based on the amount of water someone us
 #### Tier 3: Above average water usage, irrigation for a typical lawn
 #### Tier 4: Excessive USE. Usage is way above the first 3 tiers
 
+Implementation: Based on amounts of water used based on HCF/CCF we could automate assigning a tier level of water usuage. If a tenant has a high amount of water usage we can assign it either Tier 2-4. If the user is using water for an appartment/home, we could assign their usuage to tier 1 category. We could even categorize users on thier tier usage and focus on high tier usage to save water. 
+
 # Terminology (Hard to read on DOC) 
 
 ### Water Budget
