@@ -1,4 +1,4 @@
-#Automated Billing Cycle
+# Automated Billing Cycle
 
 Understanding how billing item amounts are calculated, what are the variables involved in billing and automate the process.
 
