@@ -37,7 +37,7 @@ Billing Details section, is a breakout of the charges and data used in calculati
 
 Interpretation: This section calcuates your usage and determines the bill based on your water meter usage. This includes information about your water meter and how much water a tenant is using. This could be automated if we can send the values of the water usage to some sort of electronic service that can calculate billing details. 
 
-## WATER USAGE CHARGES: 
+## WATER USAGE CHARGES: (Automated Water Charges Based on TIER's 1-4)  
 Water usage charges are dynamic and VARY based on the amount of water someone uses. The rates depend on the Tier USAGE
 
 #### Tier 1: 8 HCF OR 16 HCF on a BI Monthly basis(Basic indoor water use)
