@@ -49,17 +49,17 @@ Implementation: Based on amounts of water used based on HCF/CCF we could automat
 
 # Terminology (Hard to read on DOC) 
 
-### Water Budget
-### Outdoor Water Budget
-### Indoor Water Budget
-### Variances
-### Water Usage Charges
-### Pumping Searhcarge(Not sure if this is how it spelled, Font too small)
-### Conservation Credit
-### Sewer Service Charge
-### Rebill Amount
-### Net Amount
-### Total Adjustments
+1.) Water Budget  
+2.)Outdoor Water Budget  
+3.)Indoor Water Budget  
+4.)Variances  
+5.)Water Usage Charges  
+6.)Pumping Searhcarge(Not sure if this is how it spelled, Font too small)   
+7.)Conservation Credit  
+8.)Sewer Service Charge  
+9.)Rebill Amount  
+10.)Net Amount  
+11.)Total Adjustments   
 
 
 ## Los Angeles Country Waterworks 
