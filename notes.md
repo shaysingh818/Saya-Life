@@ -60,3 +60,39 @@ Implementation: Based on amounts of water used based on HCF/CCF we could automat
 ### Rebill Amount
 ### Net Amount
 ### Total Adjustments
+
+
+## Los Angeles Country Waterworks 
+
+#### How to pay bill?
+Your water bill can be paid online using MyWAM, in person at your local District office, over the phone by calling 1-877-637-3661, or by mail.
+
+If you wish to pay after regular business hours, drop your payment with the payment stub in the overnight deposit box located at the entrance of the District office.
+
+Mailing your payment:
+Enclose the detachable bottom portion of your bill, along with a check or money order for the amount due, in the envelope provided to ensure speed and efficiency in processing. Please do not include cash or coins. Please allow 7 to 10 business days for your payment to be received and posted on your account.
+
+If the envelope provided is lost, please mail your payment to the following address:
+Los Angeles County Treasurer
+P.O. Box 512150
+Los Angeles, CA 90051-0150
+
+
+#### When is the bill due
+
+Your water bill is due and payable upon presentation. You have 25 days from the date the bill is prepared to make your payment before the bill is delinquent. Bills that are delinquent are subject to a $10.00 late fee. A $33.00 fee is charged to cover processing costs for all returned checks.
+
+#### How many gallons are represented be each unit
+Each billing unit is 100 cubic feet of water which is equal to 748 gallons.
+
+
+### Water rates for certain areas
+|Waterworks District| Billing Code|
+|-------------------|-------------|
+|Marina del Rey Water| F17, 117,  W17| 
+
+
+## RESOURCES
+1.) https://www.irwd.com/services/water-supply-reliability
+2.) https://dpw.lacounty.gov/wwd/web/MyWAM/OnlineBilling.aspx
+
