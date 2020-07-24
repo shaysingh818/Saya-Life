@@ -90,7 +90,8 @@ Each billing unit is 100 cubic feet of water which is equal to 748 gallons.
 |Waterworks District| Billing Code|
 |-------------------|-------------|
 |Marina del Rey Water| F17, 117,  W17| 
-
+|District NO. 21, Kagel Canyon| 101, W01| 
+|
 
 ## RESOURCES
 1.) https://www.irwd.com/services/water-supply-reliability
