@@ -95,7 +95,14 @@ Each billing unit is 100 cubic feet of water which is equal to 748 gallons.
 | District No. 36, Val Verde| F12, I12, W12, W14|
 |District No. 37, Acton| F15, I15, W15|
 |District No. 40, Antelope Valley| NONE|
-
+|Region 04, Lancaster| Non-Tiered Rates - FA2, FB2, FC2, IA2, IB2, IC2, WA2, WB2, WC2
+Tiered Rates - IA1, IAA, IAB, IB1, IC1, ICA, ICB, WA1, WAA, WAB, WB1, WBA, WBB, WC1, WCA, WCB|
+|Region 24, Pearblossom| Non-Tiered Rates - WD2
+Tiered Rates - WD1 |
+|Region 27, Littlerock| Non-Tiered Rates - FF2, WF2
+Tiered Rates - IF1, WF1 |
+|Region 33, Sun Village| Non-Tiered Rates - FH2, WH2
+Tiered Rates - IH1, WH1 |
 ## RESOURCES
 1.) https://www.irwd.com/services/water-supply-reliability  
 2.) https://dpw.lacounty.gov/wwd/web/MyWAM/OnlineBilling.aspx   
