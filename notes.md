@@ -97,6 +97,6 @@ Each billing unit is 100 cubic feet of water which is equal to 748 gallons.
 |District No. 40, Antelope Valley| NONE|
 
 ## RESOURCES
-1.) https://www.irwd.com/services/water-supply-reliability
-2.) https://dpw.lacounty.gov/wwd/web/MyWAM/OnlineBilling.aspx
+1.) https://www.irwd.com/services/water-supply-reliability  
+2.) https://dpw.lacounty.gov/wwd/web/MyWAM/OnlineBilling.aspx   
 
