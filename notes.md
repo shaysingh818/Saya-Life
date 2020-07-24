@@ -100,6 +100,9 @@ Each billing unit is 100 cubic feet of water which is equal to 748 gallons.
 |Region 27, Littlerock| Non-Tiered Rates - FF2, WF2 Tiered Rates - IF1, WF1 |
 |Region 33, Sun Village| Non-Tiered Rates - FH2, WH2 Tiered Rates - IH1, WH1 |
 |Region 34, Desert View Highlands| Non-Tiered Rates - FK2, FL2, IJ2, IK2, IL2, IM2, WJ2, WK2, WL2 Tiered Rates - IJ1, IK1, IKA, IKB, WJ1, WJA, WJB, WK1, WKA, WKB, WL1, WLA, WLB, WM1, WMA, WMB| 
+|Region 35, NE Los Angeles County| Non-Tiered Rates - FQ2, KEY, WQ2 Tiered Rates - WQ1| 
+|Region 38, Lake Los Angeles| Non-Tiered Rates - FR2, IR2, WR2, WT2 Tiered Rates - IR1, WR1, WT1 |
+| Region 39, Rock Creek| Non-Tiered Rates - WU2 Tiered Rates - WU1| 
 ## RESOURCES
 1.) https://www.irwd.com/services/water-supply-reliability  
 2.) https://dpw.lacounty.gov/wwd/web/MyWAM/OnlineBilling.aspx   
