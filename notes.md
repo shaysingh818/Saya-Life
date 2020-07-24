@@ -78,12 +78,21 @@ P.O. Box 512150
 Los Angeles, CA 90051-0150
 
 
-#### When is the bill due
+#### When is the bill due  
 
-Your water bill is due and payable upon presentation. You have 25 days from the date the bill is prepared to make your payment before the bill is delinquent. Bills that are delinquent are subject to a $10.00 late fee. A $33.00 fee is charged to cover processing costs for all returned checks.
+Your water bill is due and payable upon presentation. You have 25 days from the date the bill is prepared to make your payment before the bill is delinquent. Bills that are delinquent are subject to a $10.00 late fee. A $33.00 fee is charged to cover processing costs for all returned checks.  
 
-#### How many gallons are represented be each unit
-Each billing unit is 100 cubic feet of water which is equal to 748 gallons.
+#### How many gallons are represented be each unit  
+Each billing unit is 100 cubic feet of water which is equal to 748 gallons.  
+
+#### Why do districts not offer reduced rates to low income customers  
+LACWD established its water rates based on the fair distribution of the true cost of water which includes operational and maintenance costs, administrative expenses, and reserves for capital improvements and emergency. Rate reduction to certain customers based on income or age for the same amount of water used would unfairly require a rate increase on other customers to subsidize the reduced rates.      
+
+#### Are my water bills considered public record?  
+The LACWD confidentiality clause in the Rules and Regulations states that individual customer applications and billing and payment records are not public records and cannot be released. The only exceptions are released under a court order or written authorization of the account holder.   
+
+#### How to read a water meter   
+The register on the meter has numbers and a sweep hand and is read in units of hundred cubic feet (1 HCF = 748 gallons). In the center of the register are dials with numbers similar to the odometer on an automobile. Only the first four numbers are read for 3/4” or 1” meters and the first five numbers are read for 1 1/2” or 2” meters, and they are read from left to right. The last two numbers to the extreme right in black are not used for reading purposes.  
 
 
 ## Water rates for certain areas
