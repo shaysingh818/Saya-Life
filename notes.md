@@ -86,7 +86,7 @@ Your water bill is due and payable upon presentation. You have 25 days from the 
 Each billing unit is 100 cubic feet of water which is equal to 748 gallons.
 
 
-### Water rates for certain areas
+## Water rates for certain areas
 |Waterworks District| Billing Code|
 |-------------------|-------------|
 |Marina del Rey Water| F17, 117,  W17| 
