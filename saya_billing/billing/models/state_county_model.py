@@ -2,8 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from .service_charge_model import Charge
-from .tier_model import Tier, LotSize
-
 
 class State(models.Model): 
     title = models.CharField(max_length=100, unique=True)
@@ -19,7 +17,6 @@ class County(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     state = models.ForeignKey(State, on_delete=models.CASCADE) 
     service_charges = models.ManyToManyField(Charge, related_name='countycharges', blank=True) 
-    lot_sizes = models.ManyToManyField(LotSize, related_name='countylots', blank=True)
 
     def __str__(self): 
         return "{}".format(self.title) 

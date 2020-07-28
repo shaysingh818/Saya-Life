@@ -1,14 +1,14 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from  .service_charge_model  import Charge
-
+from .state_county_model import County 
 
 class LotSize(models.Model): 
     title = models.CharField(max_length=100, unique=True)
     lot_size_low = models.IntegerField()
     lot_size_high = models.IntegerField()
     date_posted = models.DateTimeField(default=timezone.now) 
+    county = models.ForeignKey(County, on_delete=models.CASCADE) 
 
     def __str__(self): 
         return "{}".format(self.title) 

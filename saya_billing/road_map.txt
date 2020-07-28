@@ -3,6 +3,16 @@ DB STRUCTURE
 STATE --> COUNTY --> Get lot tiers for county --> Get HCF tiers for county --> determine tier usage --> get county service charges --> create county bill 
 
 1.) Create a water tier rate system that can take COUNTY and STATE/User profile HCF as input and generate service charges, tier rates and lot sizes
+		
+		If I want to get all the county lot size ranges:
+			lotsize = LotSize.objects.all(filter by county)
+			for lot in lotsize: 
+				ranges = range(lot.lot_size_low, lot.lot_size_high) 
+				
+			for lot in lotsize:  
+		        if 7501 in range(lot.lot_size_low, lot.lot_size_high): 
+    			         print(lot) 
+
 
 2.) Backend portal
 	Need to be able to add Lot Sizes and Tier ranges for COUNTY
