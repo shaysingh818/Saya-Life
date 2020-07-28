@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from api.models import *
-from api.serializers import *
+from billing.models import *
+from billing.serializers import *
 from django.shortcuts import render
 from rest_framework.views import APIView
 from django.http import HttpResponse, Http404

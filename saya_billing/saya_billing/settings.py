@@ -32,8 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'corsheaders', 
-    'api', 
-    'billing', 
     'rest_framework.authtoken', 
     'rest_framework', 
     'django.contrib.admin',
@@ -42,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'billing', 
 ]
 
 

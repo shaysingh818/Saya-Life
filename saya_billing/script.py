@@ -2,6 +2,11 @@ import os
 import math
 
 
+#TO do this for the user with THEIR county/state
+#GET the county lot size ranges, put them in a list
+#GET the county TIER rate ranges
+#THEN use the logic down below with the COUNTY lot/tier ranges
+
 #Determine lot size tier
 def determine_lot_size(lot_size):
 
