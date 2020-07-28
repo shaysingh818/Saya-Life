@@ -25,7 +25,7 @@ user_urlpatterns = [
 # Application URLs #
 ####################
 urlpatterns = [
-    url(r'^saya/', include(user_urlpatterns)),
+    url(r'^users/', include(user_urlpatterns)),
     #url(r'^notifications/', include(song_urlpatterns)),
 ]
 

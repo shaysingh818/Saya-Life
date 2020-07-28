@@ -1,0 +1,5 @@
+DB STRUCTURE
+
+STATE --> COUNTY --> Get lot tiers for county --> Get HCF tiers for county --> determine tier usage --> get county service charges --> create county bill 
+
+

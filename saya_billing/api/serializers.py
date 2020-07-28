@@ -2,7 +2,7 @@ from rest_framework import serializers
 import base64
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework.validators import UniqueValidator
-from api.models import Profile, Notification
+from billing.models import Profile, Notification
 from django.contrib.auth.models import User
 
 
