@@ -29,6 +29,7 @@ county_urlpatterns = [
     url(r'^county/(?P<pk>[\w-]+)/$', views.CountyView.as_view(), name='county-detail'),
     url(r'^county-state/(?P<pk>[\w-]+)/$', views.CountyStateView.as_view(), name='county-state-view'),
     url(r'^county-lots/(?P<pk>[\w-]+)/$', views.LotSizeCounty.as_view(), name='county-lots-view'),
+    url(r'^county-tiers/(?P<pk>[\w-]+)/$', views.LotSizeTiers.as_view(), name='county-lots-tiers'),
 
 ]
 

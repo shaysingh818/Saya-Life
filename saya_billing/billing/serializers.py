@@ -46,7 +46,7 @@ class ViewCountySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = County
-        fields = ('title',)
+        fields = ('title', 'id')
 
 
 
@@ -54,7 +54,7 @@ class ViewLotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LotSize
-        fields = ('title', 'lot_size_low', 'lot_size_high')
+        fields = ('title', 'lot_size_low', 'lot_size_high', 'id')
 
 
 class CreateLotSerializer(serializers.ModelSerializer):
@@ -62,4 +62,20 @@ class CreateLotSerializer(serializers.ModelSerializer):
     class Meta:
         model = LotSize
         fields = ('title', 'lot_size_low', 'lot_size_high')
+
+
+class CreateTierSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tier
+        fields = ('title', 'tier_range_low', 'tier_range_high')
+
+
+
+class ViewTierSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tier
+        fields = ('title', 'tier_range_low', 'tier_range_high')
+
 
