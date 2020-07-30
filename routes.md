@@ -3,12 +3,13 @@
 Get: Not allowed   
 Post: Register User: Username and Password required. 
 
+```
 Params = {  
 	'username': username,    
 	'password': password,    
 	'password2': password    
 }   
-
+```
 ```
 /billing/register/
 ```
@@ -36,12 +37,15 @@ Post: Create County Under State object
 ```
 
 ### View indidividal county
+Get: Get individual county   
 ```
-/billing/counties/<county_id>/ 
+/billing/counties/county/<county_id>/ 
 ```
-
 
 ### View all the counties in a State
+Get: View all the counties in a state   
+
 ```
 /billing/counties/county-state/<state_id>/
 ```
+
