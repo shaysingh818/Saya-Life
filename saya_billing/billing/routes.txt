@@ -1,0 +1,10 @@
+
+/billing/register/
+/billing/states/states/
+/billing/states/state/<state_id>/
+
+
+/billing/counties/counties/
+/billing/counties/<county_id>/ 
+/billing/counties/county-state/<state_id>/
+

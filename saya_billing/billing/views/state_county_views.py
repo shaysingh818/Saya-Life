@@ -68,6 +68,8 @@ class CountiesView(APIView):
         serializer = ViewCountySerializer(counties, many=True)
         return Response(serializer.data)
 
+
+#View county information
 class CountyView(APIView):
 
     def get_object(self, pk):
@@ -104,6 +106,7 @@ class CountyStateView(APIView):
         return Response(serializer.data)
 
 
+#Add lot size for specific county
 class LotSizeCounty(APIView):
 
     def get_object(self, pk):
@@ -128,7 +131,7 @@ class LotSizeCounty(APIView):
             return Response({"Message": "Failed to create Lot Size"})
 
 
-
+#Add tier requirements for lot size
 class LotSizeTiers(APIView):
 
     def get_object(self, pk):
