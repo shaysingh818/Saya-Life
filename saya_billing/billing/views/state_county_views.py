@@ -93,14 +93,14 @@ class CountyView(APIView):
 #View Counties Under State
 class CountyStateView(APIView):
 
-    def get_object(self, pk):
+    def get_object(self, code):
         try:
-            return State.objects.get(pk=pk)
+            return State.objects.get(code=code)
         except State.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        state = self.get_object(pk)
+    def get(self, request, code, format=None):
+        state = self.get_object(code)
         counties = County.objects.filter(state=state)
         serializer = ViewCountySerializer(counties, many=True)
         return Response(serializer.data)
@@ -109,24 +109,24 @@ class CountyStateView(APIView):
 #Add lot size for specific county
 class LotSizeCounty(APIView):
 
-    def get_object(self, pk):
+    def get_object(self, title):
         try:
-            return County.objects.get(pk=pk)
+            return County.objects.get(title=title)
         except County.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        county = self.get_object(pk)
+    def get(self, request, title, format=None):
+        county = self.get_object(title)
         lot_sizes = LotSize.objects.filter(county=county)
         serializer = ViewLotSerializer(lot_sizes, many=True)
         return Response(serializer.data)
 
-    def post(self, request, pk, format=None):
-        select_county = self.get_object(pk)
+    def post(self, request, title, format=None):
+        select_county = self.get_object(title)
         serializer = CreateLotSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(county=select_county)
-            return Response({"Message": "Created Lot Size"})
+            return Response(serializer.data)
         else:
             return Response({"Message": "Failed to create Lot Size"})
 
@@ -134,20 +134,20 @@ class LotSizeCounty(APIView):
 #Add tier requirements for lot size
 class LotSizeTiers(APIView):
 
-    def get_object(self, pk):
+    def get_object(self, title):
         try:
-            return LotSize.objects.get(pk=pk)
+            return LotSize.objects.get(title=title)
         except LotSize.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        lot_size = self.get_object(pk)
+    def get(self, request, title, format=None):
+        lot_size = self.get_object(title)
         tiers = Tier.objects.filter(lot_size=lot_size)
         serializer = ViewTierSerializer(tiers, many=True)
         return Response(serializer.data)
 
-    def post(self, request, pk, format=None):
-        lot_size = self.get_object(pk)
+    def post(self, request, title, format=None):
+        lot_size = self.get_object(title)
         serializer = CreateTierSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(lot_size=lot_size)
@@ -156,7 +156,40 @@ class LotSizeTiers(APIView):
             return Response({"Message": "Failed to create tier for lot"})
 
 
+#Add tier requirements for lot size
+class CountyCharges(APIView):
 
+    def get_object(self, title):
+        try:
+            return County.objects.get(title=title)
+        except County.DoesNotExist:
+            raise Http404
+
+    def get(self, request, title): 
+        county = self.get_object(title) 
+        charges = Charge.objects.filter(county=county)
+        serializer = ViewChargeSerializer(charges, many=True) 
+        return Response(serializer.data) 
+
+
+    def post(self, request, title, format=None):
+        county = self.get_object(title)
+        serializer = CreateChargeSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(county=county)
+            return Response({"Message": "Created Charge under county"})
+        else:
+            return Response({"Message": "Failed to create charge for county"})
+
+    def delete(self, request, title, format=None):
+        county = self.get_object(title)
+        charge = Charge.objects.get(county=county)
+        charge.delete()
+        return Response({"Message": "Charge was deleted"})
+
+
+
+    
 
 
 #Add Lot Sizes County

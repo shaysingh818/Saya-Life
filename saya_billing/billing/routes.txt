@@ -1,10 +1,24 @@
 
-/billing/register/
-/billing/states/states/
-/billing/states/state/<state_id>/
+
+/billing/locations/states/
+/billing/locations/states-search/<search_parameter>/ 
+/billing/locations/state/<state_id>/
+/billing/locations/counties/
+/billing/locations/county-search/<search_parameter>/ 
+/billing/locations/county/<county_id>/
+/billing/locations/state-counties/<state_code>/ 
+/billing/locations/county-lots/<county_id>/
+/billing/locations/county-tiers/<lot_id>/
+/billing/locations/county-service-charges/<county_title>/
+/billing/locations/properties/<state_code>/ 
+/billing/locations/county-properties/<county_title>/  
 
 
-/billing/counties/counties/
-/billing/counties/<county_id>/ 
-/billing/counties/county-state/<state_id>/
+/billing/users/register/
+/billing/users/bill/<user_id>/
+/billing/users/property/<property_id>/ 
+/billing/users/hcf_usage/<user_id>/
+/billing/users/overdue-alert/<user_id>/ 
+/billing/users/billing-alert/<user_id>/ 
+/billing/users/hcf_over_usage/<user_id>/  
 

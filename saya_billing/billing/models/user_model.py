@@ -11,7 +11,9 @@ class Property(models.Model):
     zipcode = models.IntegerField()
     lot_size = models.IntegerField() 
     date_posted = models.DateTimeField(default=timezone.now) 
-    hcf_usage = models.IntegerField() 
+    hcf_usage = models.IntegerField()
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    county = models.ForeignKey(County,on_delete=models.CASCADE) 
 
     class Meta: 
         ordering = ['date_posted'] 
@@ -36,21 +38,21 @@ class ProfileManager(models.Manager):
         return user_properties 
 
     def get_user_bill(self, pk): 
-        user_props = self.get_user_properties(pk)
-        user_profile = self.get(pk=pk) 
+        #user_props = self.get_user_properties(pk)
+        #user_profile = self.get(pk=pk) 
         #loop thru each user property and generate a bill for each
-        for prop in user_props:
-            hcf_water = prop.hcf_usage
-            lot_size = prop.lot_size
-            county_lot_ranges = LotSize.objects.filter(county=user_profile.county)
-            for lot in county_lot_ranges: 
-                if lot_size in range(lot.lot_size_low, lot.lot_size_high):
-                    print(lot) #this is the tier rating we go off
-                    #now we go through all the tiers for this lot size
-                    hcf_tiers = Tier.objects.filter(lot_size=lot)
-                    for tier in hcf_tiers: 
-                        if hcf_water in range(tier.tier_range_low, tier.tier_range_high):
-                            print(tier) 
+        prop = user_profile.user_property
+        hcf_water = prop.hcf_usage
+        lot_size = prop.lot_size
+        county_lot_ranges = LotSize.objects.filter(county=user_profile.county)
+        for lot in county_lot_ranges: 
+            if lot_size in range(lot.lot_size_low, lot.lot_size_high):
+                print(lot) #this is the tier rating we go off
+                #now we go through all the tiers for this lot size
+                hcf_tiers = Tier.objects.filter(lot_size=lot)
+                for tier in hcf_tiers: 
+                    if hcf_water in range(tier.tier_range_low, tier.tier_range_high):
+                        print(tier) 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -60,7 +62,7 @@ class Profile(models.Model):
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     county = models.ForeignKey(County, on_delete=models.CASCADE)
     hcf_usage = models.IntegerField()
-    properties = models.ManyToManyField(Property, related_name='properties', blank=True) 
+    user_property = models.ForeignKey(Property, on_delete=models.CASCADE) 
     objects = ProfileManager() 
 
     class Meta:

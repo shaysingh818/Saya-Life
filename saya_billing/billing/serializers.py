@@ -79,3 +79,16 @@ class ViewTierSerializer(serializers.ModelSerializer):
         fields = ('title', 'tier_range_low', 'tier_range_high')
 
 
+
+class ViewChargeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Charge
+        fields = ('title', 'charge_amount', 'id')
+
+
+class CreateChargeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Charge
+        fields = ('title', 'charge_amount')

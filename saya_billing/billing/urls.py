@@ -14,24 +14,18 @@ user_urlpatterns = [
 ########################################
 #Everything related to the state model
 ########################################
-state_urlpatterns = [
+locations_urlpatterns = [
     url(r'^states/', views.StatesView.as_view(), name='states-view'),
     url(r'^state/(?P<pk>[\w-]+)/$', views.StateView.as_view(), name='state-detail'),
-]
-
-
-
-########################################
-#Everything related to the County model
-########################################
-county_urlpatterns = [
     url(r'^counties/', views.CountiesView.as_view(), name='counties-view'),
     url(r'^county/(?P<pk>[\w-]+)/$', views.CountyView.as_view(), name='county-detail'),
-    url(r'^county-state/(?P<pk>[\w-]+)/$', views.CountyStateView.as_view(), name='county-state-view'),
-    url(r'^county-lots/(?P<pk>[\w-]+)/$', views.LotSizeCounty.as_view(), name='county-lots-view'),
-    url(r'^county-tiers/(?P<pk>[\w-]+)/$', views.LotSizeTiers.as_view(), name='county-lots-tiers'),
-
+    url(r'^state-counties/(?P<code>[\w-]+)/$', views.CountyStateView.as_view(), name='county-state-view'),
+    url(r'^county-lots/(?P<title>[\w-]+)/$', views.LotSizeCounty.as_view(), name='county-lots-view'),
+    url(r'^county-tiers/(?P<title>[\w-]+)/$', views.LotSizeTiers.as_view(), name='county-lots-tiers'),
+    url(r'^county-service-charges/(?P<title>[\w-]+)/$', views.CountyCharges.as_view(), name='county-service-charges'),
 ]
+
+
 
 
 
@@ -51,8 +45,7 @@ county_urlpatterns = [
 ####################
 urlpatterns = [
     url(r'^users/', include(user_urlpatterns)),
-    url(r'^states/', include(state_urlpatterns)),
-    url(r'^counties/', include(county_urlpatterns)),
+    url(r'^locations/', include(locations_urlpatterns)),
     #url(r'^notifications/', include(song_urlpatterns)),
 ]
 
