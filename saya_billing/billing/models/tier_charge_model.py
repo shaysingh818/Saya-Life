@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from .state_county_model import State, County
+from locations.models import State, County
 
 class Charge(models.Model):
     title = models.CharField(max_length=100)

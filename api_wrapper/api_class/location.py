@@ -93,3 +93,15 @@ class Locations:
         text_response = data_request.text
 
         return text_response
+
+
+    def create_lot(self,county_lot_title, low, high, county): 
+        self.add_county_lot_size(county_lot_title, low, high, county) 
+        return "Added title"  
+
+    def create_tier_lot(self, tier_level, county_lot_title, low, high): 
+        self.add_lot_tier(" {} : {} ".format(tier_level, county_lot_title), low, high, county_lot_title) 
+        return "Added thing" 
+
+
+

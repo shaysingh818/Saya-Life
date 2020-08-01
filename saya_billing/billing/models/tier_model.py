@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from .state_county_model import County 
+from locations.models import County 
 
 class LotSize(models.Model): 
     title = models.CharField(max_length=100, unique=True)

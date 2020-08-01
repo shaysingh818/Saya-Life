@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['10.0.0.153']
 
 INSTALLED_APPS = [
     'corsheaders', 
+    'locations', 
     'billing', 
     'rest_framework.authtoken', 
     'rest_framework', 
