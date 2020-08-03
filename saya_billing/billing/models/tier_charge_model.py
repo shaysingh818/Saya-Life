@@ -12,3 +12,17 @@ class Charge(models.Model):
         return 'Charge {}'.format(self.title) 
 
 
+class Bill(models.Model): 
+    date_bill_prepared = models.DateTimeField(default=timezone.now)
+    tier_water_usage = models.CharField(max_length=100) 
+    service_charge_total = models.IntegerField()
+    total_amount = models.IntegerField() 
+    due_date = models.DateTimeField(default=timezone.now)
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
+    charges = models.ManyToManyField(Charge, blank=True, related_name='charges') 
+
+    def __str__(self): 
+        return 'Bill for {}'.format(self.user.username) 
+
+
+

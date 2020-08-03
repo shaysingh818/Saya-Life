@@ -2,7 +2,7 @@ from rest_framework import serializers
 import base64
 from drf_extra_fields.fields import Base64ImageField
 from rest_framework.validators import UniqueValidator
-from .models import Notification, Profile, Charge, LotSize, Tier, Property
+from .models import Notification, Profile, Charge, LotSize, Tier, Property, Bill
 from django.contrib.auth.models import User
 
 
@@ -49,3 +49,12 @@ class CreateChargeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Charge
         fields = ('title', 'charge_amount')
+
+class ViewBillSerializer(serializers.ModelSerializer):
+
+    charges = serializers.SlugRelatedField(many=True, read_only=True,  slug_field='title')
+
+    class Meta:
+        model = Bill
+        fields = ('date_bill_prepared', 'tier_water_usage','service_charge_total','total_amount', 'due_date', 'id', 'charges')
+

@@ -3,6 +3,9 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from locations.models import State, County
 from .tier_model import LotSize, Tier
+from django.http import HttpResponse, Http404
+from rest_framework.response import Response
+from .tier_charge_model import Bill, Charge
 
 
 class Property(models.Model): 
@@ -24,35 +27,42 @@ class Property(models.Model):
 
 class ProfileManager(models.Manager):
 
-    def get_account_id(self, id_request):
-        account = self.get(account_id=id_request)
-        return account
+    def get_profile(self, pk): 
+        try:
+            return Profile.objects.get(pk=pk) 
+        except Profile.DoesNotExist: 
+            raise Http404
 
-    def get_hcf_usage(self, pk): 
-        account = self.get(pk=pk)
-        return account.hcf_usage
-
-    def get_user_properties(self, pk): 
-        user_profile = self.get(pk=pk)
-        user_properties = user_profile.properties.all()
-        return user_properties 
-
-    def get_user_bill(self, pk): 
-        #user_props = self.get_user_properties(pk)
-        #user_profile = self.get(pk=pk) 
-        #loop thru each user property and generate a bill for each
+    def get_property_tier_usage(self, pk):
+        user_profile = self.get_profile(pk=pk)
         prop = user_profile.user_property
         hcf_water = prop.hcf_usage
         lot_size = prop.lot_size
         county_lot_ranges = LotSize.objects.filter(county=user_profile.county)
-        for lot in county_lot_ranges: 
+        for lot in county_lot_ranges:
             if lot_size in range(lot.lot_size_low, lot.lot_size_high):
-                print(lot) #this is the tier rating we go off
-                #now we go through all the tiers for this lot size
                 hcf_tiers = Tier.objects.filter(lot_size=lot)
-                for tier in hcf_tiers: 
+                for tier in hcf_tiers:
                     if hcf_water in range(tier.tier_range_low, tier.tier_range_high):
-                        print(tier) 
+                        return tier.title
+
+    def bill_all_properties(self): 
+        profiles = self.all() 
+        for profile in profiles:
+            profile_tier_usage = self.get_property_tier_usage(profile.pk) 
+            county_charges = Charge.objects.filter(county=profile.county)
+            charge_sum = 0
+            for charge in county_charges: 
+                charge_sum += charge.charge_amount
+        
+            print(charge_sum)
+            print(profile_tier_usage)
+
+            create_bill = Bill.objects.create(tier_water_usage=profile_tier_usage, service_charge_total=charge_sum,total_amount=1600, user=profile.user)
+            for charge in county_charges: 
+                create_bill.charges.add(charge) 
+            create_bill.save() 
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -19,7 +19,7 @@ class Locations:
                 "Authorization": "Token {}".format(self.token) 
                 }
 
-        data_request = requests.get("{}/billing/locations/state-counties/{}/".format(self.url, state_code), headers=headers) 
+        data_request = requests.get("{}/locations/state-counties/{}/".format(self.url, state_code), headers=headers) 
 
         return data_request.text
 
@@ -29,7 +29,7 @@ class Locations:
                 "Authorization": "Token {}".format(self.token) 
                 }
 
-        data_request = requests.get("{}/billing/locations/state-counties/{}/".format(self.url, state_code), headers=headers) 
+        data_request = requests.get("{}/locations/state-counties/{}/".format(self.url, state_code), headers=headers) 
 
         return data_request.json()
 
@@ -39,7 +39,7 @@ class Locations:
                 "Authorization": "Token {}".format(self.token) 
                 }
 
-        data_request = requests.get("{}/billing/locations/county-lots/{}/".format(self.url, title), headers=headers) 
+        data_request = requests.get("{}/billing/property-size/county-lots/{}/".format(self.url, title), headers=headers) 
 
         data_request = data_request.json() 
         return data_request.text
@@ -50,7 +50,7 @@ class Locations:
                 "Authorization": "Token {}".format(self.token) 
                 }
 
-        data_request = requests.get("{}/billing/locations/county-lots/{}/".format(self.url, title), headers=headers) 
+        data_request = requests.get("{}/billing/property-size/county-lots/{}/".format(self.url, title), headers=headers) 
 
         data_request = data_request.json() 
         return data_request.json() 
@@ -72,7 +72,7 @@ class Locations:
                 'lot_size_high': lot_high
                 }
 
-        data_request = requests.post("{}/billing/locations/county-lots/{}/".format(self.url, county_title), data=data, headers=headers) 
+        data_request = requests.post("{}/billing/property-size/county-lots/{}/".format(self.url, county_title), data=data, headers=headers) 
 
         return data_request.json()
     
@@ -88,7 +88,7 @@ class Locations:
                 'tier_range_high': lot_high
                 }
 
-        data_request = requests.post("{}/billing/locations/county-tiers/{}/".format(self.url, lot_size), data=data, headers=headers) 
+        data_request = requests.post("{}/billing/property-size/county-tiers/{}/".format(self.url, lot_size), data=data, headers=headers) 
 
         text_response = data_request.text
 

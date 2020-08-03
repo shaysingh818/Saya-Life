@@ -31,3 +31,47 @@ class RegisterView(APIView):
                     token = Token.objects.create(user=user)
                     json = serializer.data
                     return Response(json)
+
+#Get user tier usage
+class UserWaterUsage(APIView): 
+
+    def get_object(self, pk): 
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist: 
+            raise Http404
+
+    def get(self, request, pk):
+
+        user_request = self.get_object(pk) 
+        profile = Profile.objects.get(user=user_request)
+        hcf_water = profile.user_property.hcf_usage
+        lot_size = profile.user_property.lot_size
+        gallons = hcf_water * 748
+
+        #get county lot table column
+        county_lot_ranges = LotSize.objects.filter(county=profile.county) 
+        for lot in county_lot_ranges: 
+            if lot_size in range(lot.lot_size_low, lot.lot_size_high):
+                hcf_tiers = Tier.objects.filter(lot_size=lot) 
+                for tier in hcf_tiers: 
+                    if hcf_water in range(tier.tier_range_low, tier.tier_range_high):
+                        water_tier_usage = tier.title
+
+        return Response({"HCF" : hcf_water, "Gallons": gallons, "Water Tier Usage": water_tier_usage})
+
+
+class BillProperties(APIView): 
+
+    def get(self, request): 
+        profiles = Profile.objects.bill_all_properties() 
+        return Response({"message": "testing"})
+
+
+
+#Add lot size for specific county
+class ViewBills(APIView):
+    def get(self, request, format=None):
+        bills = Bill.objects.all()
+        serializer = ViewBillSerializer(bills, many=True)
+        return Response(serializer.data)

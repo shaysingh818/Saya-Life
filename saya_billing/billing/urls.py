@@ -7,6 +7,9 @@ from . import views
 ##############################
 user_urlpatterns = [
     url(r'^register/', views.RegisterView.as_view(), name='register-view'),
+    url(r'^bill/', views.BillProperties.as_view(), name='bill-view'),
+    url(r'^bills/', views.ViewBills.as_view(), name='bill-views'), 
+    url(r'^bill/(?P<pk>[\w-]+)/$', views.UserWaterUsage.as_view(), name='user-water-usage'),
 
 ]
 
@@ -41,7 +44,7 @@ property_urlpatterns = [
 ####################
 urlpatterns = [
     url(r'^users/', include(user_urlpatterns)),
-    url(r'^property-size/', include(user_urlpatterns)),
+    url(r'^property-size/', include(property_urlpatterns)),
 
     #url(r'^notifications/', include(song_urlpatterns)),
 ]
