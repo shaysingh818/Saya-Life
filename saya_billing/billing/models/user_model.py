@@ -37,14 +37,15 @@ class ProfileManager(models.Manager):
         user_profile = self.get_profile(pk=pk)
         prop = user_profile.user_property
         hcf_water = prop.hcf_usage
-        lot_size = prop.lot_size
+        lot_size = int(prop.lot_size)
         county_lot_ranges = LotSize.objects.filter(county=user_profile.county)
         for lot in county_lot_ranges:
             if lot_size in range(lot.lot_size_low, lot.lot_size_high):
                 hcf_tiers = Tier.objects.filter(lot_size=lot)
                 for tier in hcf_tiers:
                     if hcf_water in range(tier.tier_range_low, tier.tier_range_high):
-                        return tier.title
+                        return tier
+
 
     def bill_all_properties(self): 
         profiles = self.all() 
@@ -54,11 +55,23 @@ class ProfileManager(models.Manager):
             charge_sum = 0
             for charge in county_charges: 
                 charge_sum += charge.charge_amount
-        
-            print(charge_sum)
-            print(profile_tier_usage)
+            total_billing_amount = profile_tier_usage.billing_amount + charge_sum
+            create_bill = Bill.objects.create(state=profile.state.code, county=profile.county.title,tier_water_usage=profile_tier_usage.title, service_charge_total=charge_sum, total_amount=total_billing_amount, user=profile.user)
+            for charge in county_charges: 
+                create_bill.charges.add(charge) 
+            create_bill.save()
 
-            create_bill = Bill.objects.create(tier_water_usage=profile_tier_usage, service_charge_total=charge_sum,total_amount=1600, user=profile.user)
+
+    def bill_by_county(self, county): 
+        profiles = self.filter(county=county) 
+        for profile in profiles:
+            profile_tier_usage = self.get_property_tier_usage(profile.pk) 
+            county_charges = Charge.objects.filter(county=profile.county)
+            charge_sum = 0
+            for charge in county_charges: 
+                charge_sum += charge.charge_amount
+            total_billing_amount = profile_tier_usage.billing_amount + charge_sum
+            create_bill = Bill.objects.create(tier_water_usage=profile_tier_usage.title, service_charge_total=charge_sum,total_amount=total_billing_amount, user=profile.user)
             for charge in county_charges: 
                 create_bill.charges.add(charge) 
             create_bill.save() 

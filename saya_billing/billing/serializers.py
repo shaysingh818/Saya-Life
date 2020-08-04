@@ -25,7 +25,7 @@ class CreateTierSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tier
-        fields = ('title', 'tier_range_low', 'tier_range_high')
+        fields = ('title', 'tier_range_low', 'tier_range_high', 'billing_amount')
 
 
 
@@ -33,7 +33,7 @@ class ViewTierSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tier
-        fields = ('title', 'tier_range_low', 'tier_range_high')
+        fields = ('title', 'tier_range_low', 'tier_range_high', 'billing_amount')
 
 
 
@@ -49,6 +49,7 @@ class CreateChargeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Charge
         fields = ('title', 'charge_amount')
+
 
 class ViewBillSerializer(serializers.ModelSerializer):
 

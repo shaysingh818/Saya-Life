@@ -7,9 +7,12 @@ from . import views
 ##############################
 user_urlpatterns = [
     url(r'^register/', views.RegisterView.as_view(), name='register-view'),
-    url(r'^bill/', views.BillProperties.as_view(), name='bill-view'),
+    url(r'^bill/(?P<pk>[\w-]+)/$', views.BillView.as_view(), name='bill-view'),
+    url(r'^current-bill/(?P<pk>[\w-]+)/$', views.CurrentBill.as_view(), name='current-bill'),
+    url(r'^bill-users/', views.BillProperties.as_view(), name='bill-views'), 
     url(r'^bills/', views.ViewBills.as_view(), name='bill-views'), 
-    url(r'^bill/(?P<pk>[\w-]+)/$', views.UserWaterUsage.as_view(), name='user-water-usage'),
+    url(r'^charges/(?P<title>[\w-]+)/$', views.AddCharge.as_view(), name='add-charge'),
+    url(r'^water-usage/(?P<pk>[\w-]+)/$', views.UserWaterUsage.as_view(), name='user-water-usage'),
 
 ]
 

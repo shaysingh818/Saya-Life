@@ -12,7 +12,9 @@ class Charge(models.Model):
         return 'Charge {}'.format(self.title) 
 
 
-class Bill(models.Model): 
+class Bill(models.Model):
+    state = models.CharField(max_length=100) 
+    county = models.CharField(max_length=100) 
     date_bill_prepared = models.DateTimeField(default=timezone.now)
     tier_water_usage = models.CharField(max_length=100) 
     service_charge_total = models.IntegerField()

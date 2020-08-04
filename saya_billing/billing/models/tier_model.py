@@ -19,7 +19,8 @@ class Tier(models.Model):
     tier_range_low = models.IntegerField()
     tier_range_high = models.IntegerField()
     date_posted = models.DateTimeField(default=timezone.now)
-    lot_size = models.ForeignKey(LotSize, on_delete=models.CASCADE) 
+    lot_size = models.ForeignKey(LotSize, on_delete=models.CASCADE)
+    billing_amount = models.IntegerField() 
 
 
     def __str__(self): 

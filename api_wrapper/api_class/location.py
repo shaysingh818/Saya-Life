@@ -76,7 +76,7 @@ class Locations:
 
         return data_request.json()
     
-    def add_lot_tier(self, title, lot_low, lot_high, lot_size):
+    def add_lot_tier(self, title, lot_low, lot_high, lot_size, billing_amount):
         
         headers = {
                 "Authorization": "Token {}".format(self.token) 
@@ -85,7 +85,8 @@ class Locations:
         data = {
                 'title': title,
                 'tier_range_low': lot_low,
-                'tier_range_high': lot_high
+                'tier_range_high': lot_high,
+                'billing_amount': billing_amount
                 }
 
         data_request = requests.post("{}/billing/property-size/county-tiers/{}/".format(self.url, lot_size), data=data, headers=headers) 
@@ -99,8 +100,8 @@ class Locations:
         self.add_county_lot_size(county_lot_title, low, high, county) 
         return "Added title"  
 
-    def create_tier_lot(self, tier_level, county_lot_title, low, high): 
-        self.add_lot_tier(" {} : {} ".format(tier_level, county_lot_title), low, high, county_lot_title) 
+    def create_tier_lot(self, tier_level, county_lot_title, low, high, billing_amount): 
+        self.add_lot_tier(" {} : {} ".format(tier_level, county_lot_title), low, high, county_lot_title, billing_amount) 
         return "Added thing" 
 
 

@@ -1,20 +1,28 @@
 
-#location module
-/locations/states/
-/locations/state/<state_id>/
-/locations/counties/
-/locations/county/<county_id>/
-/locations/state-counties/<state_code>/ 
-/locations/county-search/<search_parameter>/ 
-/locations/states-search/<search_parameter>/ 
 
+*All working
+#location module
+/locations/geo/states/
+/locations/geo/state/<state_id>/
+/locations/geo/counties/
+/locations/geo/county/<county_id>/
+/locations/geo/state-counties/<state_code>/ 
+/locations/search/states/<state_title>/
+/locations/search/counties/<county_title>/
+#hit search url with this param: route/?search=<Search term> 
+
+
+*Approved All working
 #billing module
-/billing/property-size/county-lots/<county_id>/
-/billing/property-size/county-tiers/<lot_id>/
+/billing/property-size/county-lots/<county_title>/
+/billing/property-size/county-tiers/<lot_title>/
 /billing/property-size/county-service-charges/<county_title>/
+
+
 /billing/users/register/
 /billing/users/bill/<user_id>/
 /billing/users/property/<property_id>/ 
+/billing/users/charges/<county_title>/ 
 /billing/users/hcf_usage/<user_id>/
 /billing/users/overdue-alert/<user_id>/ 
 /billing/users/billing-alert/<user_id>/ 

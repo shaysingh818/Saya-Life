@@ -15,7 +15,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
-
+#register user to the platform
 @permission_classes((AllowAny,))
 class RegisterView(APIView):
 
@@ -32,7 +32,7 @@ class RegisterView(APIView):
                     json = serializer.data
                     return Response(json)
 
-#Get user tier usage
+#Get user tier usage for user
 class UserWaterUsage(APIView): 
 
     def get_object(self, pk): 
@@ -61,17 +61,38 @@ class UserWaterUsage(APIView):
         return Response({"HCF" : hcf_water, "Gallons": gallons, "Water Tier Usage": water_tier_usage})
 
 
-class BillProperties(APIView): 
+class CurrentBill(APIView): 
 
-    def get(self, request): 
-        profiles = Profile.objects.bill_all_properties() 
-        return Response({"message": "testing"})
+    def get_object(self, pk): 
+        try: 
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk): 
+
+        user_request = self.get_object(pk) 
+        profile = Profile.objects.get(user=user_request)
+
+        user_prop = profile.user_property
+        hcf_water_usage = user_prop.hcf_usage
+        lot_size = user_prop.lot_size
+
+        county_lot_ranges = LotSize.objects.filter(county=profile.county)
+        for lot in county_lot_ranges:
+            if lot_size in range(lot.lot_size_low, lot.lot_size_high):
+                hcf_tiers = Tier.objects.filter(lot_size=lot)
+                for tier in hcf_tiers:
+                    if hcf_water_usage in range(tier.tier_range_low, tier.tier_range_high):
+                        user_tier = tier
+
+        county_charges = Charge.objects.filter(county=profile.county)
+        charge_sum = 0
+        for charge in county_charges: 
+            charge_sum += charge.charge_amount
+        total_billing_amount = user_tier.billing_amount + charge_sum
+        
+        return Response({"Total": total_billing_amount, "Service_charges": charge_sum, "Water": user_tier.billing_amount, "Water-level": user_tier.title, "Property-size": str(lot_size) + " Square Ft"}) 
 
 
 
-#Add lot size for specific county
-class ViewBills(APIView):
-    def get(self, request, format=None):
-        bills = Bill.objects.all()
-        serializer = ViewBillSerializer(bills, many=True)
-        return Response(serializer.data)

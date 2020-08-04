@@ -16,6 +16,18 @@ from rest_framework.decorators import permission_classes
 from rest_framework.authtoken.models import Token
 
 
+class StateSearch(generics.ListCreateAPIView):
+    search_fields = ['title']
+    filter_backends = (filters.SearchFilter,)
+    queryset = State.objects.all()
+    serializer_class = ViewStatesSerializer
+
+class CountySearch(generics.ListCreateAPIView):
+    search_fields = ['title']
+    filter_backends = (filters.SearchFilter,)
+    queryset = County.objects.all()
+    serializer_class = ViewCountySerializer
+
 #Create, Read, Update, Delete Playlist
 class StatesView(APIView):
     def get(self, request, format=None):
