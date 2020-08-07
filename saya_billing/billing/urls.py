@@ -13,6 +13,7 @@ user_urlpatterns = [
     url(r'^bills/', views.ViewBills.as_view(), name='bill-views'), 
     url(r'^charges/(?P<title>[\w-]+)/$', views.AddCharge.as_view(), name='add-charge'),
     url(r'^water-usage/(?P<pk>[\w-]+)/$', views.UserWaterUsage.as_view(), name='user-water-usage'),
+    url(r'^property/(?P<pk>[\w-]+)/$', views.UserProperty.as_view(), name='property-user'),
 
 ]
 

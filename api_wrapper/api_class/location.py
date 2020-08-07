@@ -95,6 +95,20 @@ class Locations:
 
         return text_response
 
+    def update_hcf(self, user_id, hcf_usage): 
+
+        headers = {
+                "Authorization": "Token {}".format(self.token)
+                }
+
+        data = {
+                'hcf_usage': hcf_usage,
+                }
+
+        data_request = requests.put("{}/billing/users/property/{}/".format(self.url, user_id), data=data, headers=headers)
+
+        text_response = data_request.text
+
 
     def create_lot(self,county_lot_title, low, high, county): 
         self.add_county_lot_size(county_lot_title, low, high, county) 

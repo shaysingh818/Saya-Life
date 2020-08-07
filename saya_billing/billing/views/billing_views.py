@@ -66,6 +66,33 @@ class BillView(APIView):
         return Response({"Message": "Bill was deleted"})
 
 
+class UserProperty(APIView): 
+
+    def get_object(self, pk): 
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk): 
+        user = self.get_object(pk)
+        profile = Profile.objects.get(user=user)
+        user_property = profile.user_property
+        serializer = ViewPropertySerializer(user_property) 
+        return Response(serializer.data) 
+
+    def put(self, request, pk): 
+        user = self.get_object(pk)
+        profile = Profile.objects.get(user=user)
+        user_property = profile.user_property
+        serializer = UpdatePropertySerializer(user_property, data=request.data) 
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.data) 
+            return Response({"Message": "Updated Bill"}) 
+        else: 
+            return Response({"Message": "Could not update property info"}) 
+
+
 #Bill by county
 class BillCounty(APIView): 
     def get(self, request, county): 

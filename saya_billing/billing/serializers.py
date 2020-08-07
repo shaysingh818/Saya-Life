@@ -59,3 +59,19 @@ class ViewBillSerializer(serializers.ModelSerializer):
         model = Bill
         fields = ('date_bill_prepared', 'tier_water_usage','service_charge_total','total_amount', 'due_date', 'id', 'charges')
 
+
+
+class ViewPropertySerializer(serializers.ModelSerializer):
+    state = serializers.SlugRelatedField(many=False, read_only=True,  slug_field='title')
+    county = serializers.SlugRelatedField(many=False, read_only=True,  slug_field='title')
+
+    class Meta:
+        model = Property
+        fields = ('title', 'address', 'zipcode', 'lot_size', 'date_posted', 'hcf_usage', 'state', 'county')
+
+
+class UpdatePropertySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Property
+        fields = ('hcf_usage', )

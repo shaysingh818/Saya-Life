@@ -46,6 +46,45 @@ class ProfileManager(models.Manager):
                     if hcf_water in range(tier.tier_range_low, tier.tier_range_high):
                         return tier
 
+    def charge_tier_usage(self, pk):
+        profile = Profile.objects.get(pk=pk)
+        prop = profile.user_property
+        hcf_water = prop.hcf_usage
+        lot_size = prop.lot_size
+        county_lot_ranges = LotSize.objects.filter(county=profile.county)
+        tier_usage = self.get_property_tier_usage(profile.pk)
+        print("HCF Water usage {}".format(hcf_water))
+        charge_sum = 0
+        for lot in county_lot_ranges:
+            if lot_size in range(lot.lot_size_low, lot.lot_size_high):
+                hcf_tiers = Tier.objects.filter(lot_size=lot)
+                subtract = hcf_water
+                for tier in hcf_tiers:
+                    if(subtract > 0):
+                        print("{} - {} ".format(subtract, tier.tier_range_high - 1)) 
+                        subtract -= tier.tier_range_high - 1
+                        print("Subtract value: {}".format(subtract))
+                        if(subtract < 0):
+                            print("Value {}".format(subtract + tier.tier_range_high - 1))
+                            remainder = subtract + tier.tier_range_high - 1 
+                            charge = float(tier.billing_amount) * (remainder) 
+                            charge_sum += charge
+                            print("Final Charge {}".format(charge_sum))
+                        else:
+                            charge = float(tier.billing_amount) * (tier.tier_range_high - 1)
+                            print("{} x {}".format(tier.billing_amount, tier.tier_range_high - 1))
+                            print("Charge {} Dollars: ".format(charge))
+                            charge_sum += charge
+                            #check if value is negative and charge the differnce between 0
+                            #if(subtract < 0):
+                                #print("Value {}".format(subtract + tier.tier_range_high - 1))
+                            print("This the total: {}".format(charge_sum))
+                    else:
+                        print("Not subtracting any more")
+
+        return "Total Charge {} ".format(charge_sum) 
+                   
+
 
     def bill_all_properties(self): 
         profiles = self.all() 

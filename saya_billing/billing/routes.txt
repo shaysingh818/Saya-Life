@@ -28,3 +28,13 @@
 /billing/users/billing-alert/<user_id>/ 
 /billing/users/hcf_over_usage/<user_id>/  
 
+
+
+/billing/users/property/<user_id>/ 
+/billing/users/bill-users/ 
+/billing/users/current-bill/1/
+
+
+Billing period
+
+
