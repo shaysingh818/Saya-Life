@@ -92,19 +92,19 @@ class UserProperty(APIView):
         else: 
             return Response({"Message": "Could not update property info"}) 
 
+class BillUser(APIView):
 
-#Bill by county
-class BillCounty(APIView): 
-    def get(self, request, county): 
-        profiles = Profile.objects.bill_by_county(county) 
-        return Response({"message": "testing"})
+    def get_object(self, pk): 
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
 
-
-class BillProperties(APIView): 
-    def get(self, request): 
-        profiles = Profile.objects.bill_all_properties() 
-        return Response({"message": "testing"})
-
+    def get(self, request, pk):
+        user = self.get_object(pk)
+        profile = Profile.objects.get(user=user)
+        bill_user = Profile.objects.bill_user(profile.pk)
+        return Response({"Message": "Billed user"}) 
 
 #Add lot size for specific county
 class ViewBills(APIView):

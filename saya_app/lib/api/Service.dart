@@ -1,0 +1,43 @@
+import 'package:shared_preferences/shared_preferences.dart';
+import '../models/Bill.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
+
+class Service{
+
+  static String url; 
+  static String auth_token; 
+
+  static setUrlToken(final_url, token) async {
+    url = final_url; 
+    auth_token = token; 
+
+    print(url);
+    print(token);
+
+  }
+
+  static Future<List<Bill>> getBills() async {
+    try {
+      final response = await http.get('$url/billing/users/bills/', headers: {
+         "Accept":"application/json",
+          "Authorization": "Token $auth_token"
+
+      });
+      if(response.statusCode == 200){
+        final List<Bill> bills = billFromJson(response.body);
+        return bills;
+      }else{
+        return List<Bill>(); 
+      }
+
+    }catch(e){
+      return List<Bill>(); 
+
+    }
+
+  }
+
+}

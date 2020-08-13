@@ -1,0 +1,7 @@
+Set up the notification system
+Send notification evertime a bill is generated
+Send Notifications if bill is overdue
+Need an endpoint to get all notifications sent to the user
+Create a property detail page
+
+

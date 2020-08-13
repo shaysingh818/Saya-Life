@@ -33,6 +33,39 @@ class ProfileManager(models.Manager):
         except Profile.DoesNotExist: 
             raise Http404
 
+    def get_hcf_usage(self, pk): 
+        user_profile = self.get_profile(pk=pk) 
+        prop = user_profile.user_property
+        hcf_water = prop.hcf_usage
+        return hcf_water
+
+    def get_hcf_gallons(self, pk):
+        user_profile = self.get_profile(pk=pk) 
+        hcf_usage = self.get_hcf_usage(user_profile.pk) 
+        return hcf_usage * 748
+
+    def display_county_charges(self, pk):
+        user_profile = self.get_profile(pk=pk)
+        charges = Charge.objects.filter(county=user_profile.county)
+        list_charges = [] 
+        for charge in charges: 
+            list_charges.append("{}: {}".format(charge.title, charge.charge_amount)) 
+        return list_charges
+
+
+    def get_user_county_charges(self, pk):
+        user_profile = self.get_profile(pk=pk)
+        charges = Charge.objects.filter(county=user_profile.county)
+        return charges
+
+    def get_county_charge_total(self, pk): 
+        user_profile = self.get_profile(pk) 
+        charges = Charge.objects.filter(county=user_profile.county) 
+        charge_sum = 0
+        for charge in charges: 
+            charge_sum += charge.charge_amount
+        return charge_sum
+        
     def get_property_tier_usage(self, pk):
         user_profile = self.get_profile(pk=pk)
         prop = user_profile.user_property
@@ -53,67 +86,44 @@ class ProfileManager(models.Manager):
         lot_size = prop.lot_size
         county_lot_ranges = LotSize.objects.filter(county=profile.county)
         tier_usage = self.get_property_tier_usage(profile.pk)
-        print("HCF Water usage {}".format(hcf_water))
         charge_sum = 0
+        final_charge = 0
         for lot in county_lot_ranges:
             if lot_size in range(lot.lot_size_low, lot.lot_size_high):
                 hcf_tiers = Tier.objects.filter(lot_size=lot)
                 subtract = hcf_water
                 for tier in hcf_tiers:
                     if(subtract > 0):
-                        print("{} - {} ".format(subtract, tier.tier_range_high - 1)) 
                         subtract -= tier.tier_range_high - 1
-                        print("Subtract value: {}".format(subtract))
                         if(subtract < 0):
-                            print("Value {}".format(subtract + tier.tier_range_high - 1))
                             remainder = subtract + tier.tier_range_high - 1 
                             charge = float(tier.billing_amount) * (remainder) 
                             charge_sum += charge
-                            print("Final Charge {}".format(charge_sum))
                         else:
                             charge = float(tier.billing_amount) * (tier.tier_range_high - 1)
-                            print("{} x {}".format(tier.billing_amount, tier.tier_range_high - 1))
-                            print("Charge {} Dollars: ".format(charge))
                             charge_sum += charge
-                            #check if value is negative and charge the differnce between 0
-                            #if(subtract < 0):
-                                #print("Value {}".format(subtract + tier.tier_range_high - 1))
-                            print("This the total: {}".format(charge_sum))
                     else:
                         print("Not subtracting any more")
+        charge_without_county = charge_sum
+        county_charges = Charge.objects.filter(county=profile.county)
+        service_charge = 0
+        float(service_charge)
+        for charge in county_charges: 
+            service_charge += charge.charge_amount
+        final_charge = float(service_charge) + charge_sum
+        final_charge = round(final_charge, 2)
+        return final_charge 
 
-        return "Total Charge {} ".format(charge_sum) 
-                   
-
-
-    def bill_all_properties(self): 
-        profiles = self.all() 
-        for profile in profiles:
-            profile_tier_usage = self.get_property_tier_usage(profile.pk) 
-            county_charges = Charge.objects.filter(county=profile.county)
-            charge_sum = 0
-            for charge in county_charges: 
-                charge_sum += charge.charge_amount
-            total_billing_amount = profile_tier_usage.billing_amount + charge_sum
-            create_bill = Bill.objects.create(state=profile.state.code, county=profile.county.title,tier_water_usage=profile_tier_usage.title, service_charge_total=charge_sum, total_amount=total_billing_amount, user=profile.user)
-            for charge in county_charges: 
-                create_bill.charges.add(charge) 
-            create_bill.save()
-
-
-    def bill_by_county(self, county): 
-        profiles = self.filter(county=county) 
-        for profile in profiles:
-            profile_tier_usage = self.get_property_tier_usage(profile.pk) 
-            county_charges = Charge.objects.filter(county=profile.county)
-            charge_sum = 0
-            for charge in county_charges: 
-                charge_sum += charge.charge_amount
-            total_billing_amount = profile_tier_usage.billing_amount + charge_sum
-            create_bill = Bill.objects.create(tier_water_usage=profile_tier_usage.title, service_charge_total=charge_sum,total_amount=total_billing_amount, user=profile.user)
-            for charge in county_charges: 
-                create_bill.charges.add(charge) 
-            create_bill.save() 
+    def bill_user(self, pk): 
+        user_profile = self.get_profile(pk=pk)
+        final_charge = self.charge_tier_usage(user_profile.pk)
+        profile_tier_usage = self.get_property_tier_usage(user_profile.pk) 
+        county_charge_total = self.get_county_charge_total(user_profile.pk) 
+        create_bill = Bill.objects.create(state=user_profile.state.code, county=user_profile.county.title, tier_water_usage=profile_tier_usage.title, service_charge_total=county_charge_total,total_amount=final_charge, user=user_profile.user)  
+        county_charges = Charge.objects.filter(county=user_profile.county)
+        for charge in county_charges: 
+            create_bill.charges.add(charge)
+        create_bill.save() 
 
 
 class Profile(models.Model):
