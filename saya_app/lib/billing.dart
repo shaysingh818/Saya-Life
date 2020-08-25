@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import './models/Bill.dart'; 
-import './api/Service.dart'; 
+import './api/Service.dart';
+import 'billing_detail.dart'; 
 
 class BillingPage extends StatefulWidget {
 
@@ -81,6 +82,11 @@ class _BillingPageState extends State<BillingPage> {
           return  Card(
             child: Column(children: [
               ListTile(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                  MaterialPageRoute(builder: (context) => BillingDetailPage(pk: bill.id)));
+                },
                 leading: Icon(
                   Icons.message, 
                 ), 

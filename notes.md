@@ -115,4 +115,4 @@ The register on the meter has numbers and a sweep hand and is read in units of h
 ## RESOURCES
 1.) https://www.irwd.com/services/water-supply-reliability  
 2.) https://dpw.lacounty.gov/wwd/web/MyWAM/OnlineBilling.aspx   
-
+3.) Bill(https://www.irwd.com/images/pdf/services/understanding_your_bill.pdf)

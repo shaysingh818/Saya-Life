@@ -3,5 +3,11 @@ Send notification evertime a bill is generated
 Send Notifications if bill is overdue
 Need an endpoint to get all notifications sent to the user
 Create a property detail page
+Delete the HCF attribute for profile
+
+
+build billing detail page
+	We want to view the charges
+	Design a good billing detail page
 
 

@@ -13,7 +13,6 @@ class LotSize(models.Model):
     def __str__(self): 
         return "{}".format(self.title) 
 
-
 class Tier(models.Model): 
     title = models.CharField(max_length=100, unique=True) 
     tier_range_low = models.IntegerField()

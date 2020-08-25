@@ -63,3 +63,10 @@ class WaterUsageMeter(APIView):
         return Response({"HCF": hcf_usage, "Gallons": hcf_gallons}) 
 
 
+
+class Notifications(APIView): 
+    def get(self, request): 
+        user = request.user
+        notifs = Notification.objects.get_user_notifs(user.pk) 
+        serializer = ViewNotificationSerializer(notifs, many=True) 
+        return Response(serializer.data) 

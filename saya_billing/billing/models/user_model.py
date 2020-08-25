@@ -8,6 +8,23 @@ from rest_framework.response import Response
 from .tier_charge_model import Bill, Charge
 
 
+class NotificationManager(models.Manager):
+
+    def get_user_notifs(self, pk):
+        notifs = self.filter(to_user=pk).order_by('-date_posted') 
+        return notifs
+
+
+class Notification(models.Model):
+    title = models.CharField(max_length=100) 
+    subtitle = models.CharField(max_length=1000) 
+    date_posted = models.DateTimeField(default=timezone.now)
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE) 
+    objects = NotificationManager()
+
+    def __str__(self):
+        return 'Notfiication {} to {}'.format(self.title, self.to_user.username) 
+
 class Property(models.Model): 
     title = models.CharField(max_length=100) 
     address = models.CharField(max_length=200)
@@ -123,7 +140,9 @@ class ProfileManager(models.Manager):
         county_charges = Charge.objects.filter(county=user_profile.county)
         for charge in county_charges: 
             create_bill.charges.add(charge)
-        create_bill.save() 
+        create_bill.save()
+        send_notification = Notification.objects.create(title="You have a new bill", subtitle="A bill has been generated for your billing cycle", to_user=user_profile.user)
+        send_notification.save() 
 
 
 class Profile(models.Model):
@@ -133,7 +152,6 @@ class Profile(models.Model):
     bio = models.TextField()
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     county = models.ForeignKey(County, on_delete=models.CASCADE)
-    hcf_usage = models.IntegerField()
     user_property = models.ForeignKey(Property, on_delete=models.CASCADE) 
     objects = ProfileManager() 
 

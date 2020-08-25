@@ -47,12 +47,12 @@ signIn(String username, password) async {
     var jsonData = null;
     //SharedPreferences  prefs = await SharedPreferences.getInstance();
     //final network = prefs.getString('network');
-    var response = await http.post("http://10.0.0.153:8000/api-token-auth/", body: data);
+    var response = await http.post("http://127.0.0.1:8000/api-token-auth/", body: data);
     //if this user gets a token, send them to the home page
     if(response.statusCode == 200){
       jsonData = json.decode(response.body);
       final auth_token = jsonData['token'];
-      Service.setUrlToken("http://10.0.0.153:8000", auth_token); 
+      Service.setUrlToken("http://127.0.0.1:8000", auth_token); 
     
 
         //prefs.setString("token", jsonData['token']);

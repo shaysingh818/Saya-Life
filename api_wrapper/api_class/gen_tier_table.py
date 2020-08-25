@@ -1,6 +1,6 @@
 import location
 
-locationclass = location.Locations("5466e5c5dba8f1d4c094b3e39d0d50defbcf4416", "http://10.0.0.153:8000") 
+locationclass = location.Locations("59d25a81c75371cee3179ff5fa00f4f463442e65", "http://10.0.0.153:8000") 
 
 locationclass.create_lot("LA_Under_7500", 0, 7500, "LA_County") 
 locationclass.create_tier_lot("Tier 1", "LA_Under_7500", 0, 9, 6.03)    

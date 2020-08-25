@@ -75,3 +75,10 @@ class UpdatePropertySerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
         fields = ('hcf_usage', )
+
+
+
+class ViewNotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ('title', 'subtitle', 'date_posted', 'id')

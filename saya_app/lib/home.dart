@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import './api/Service.dart';
+import './models/Notifications.dart'; 
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -17,6 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   String HOST;
 
+
   /**
    * Get the current youtube API key stored in the django database to set it
    * in shared preferences
@@ -31,7 +33,6 @@ class _HomePageState extends State<HomePage> {
    */
 
   double charge_sum;
-
   String tier;
   int hcf;
   int gallons; 
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
 
 
     http.Response response = await http.get(
-        Uri.encodeFull("$network/billing/users/current-bill/?format=json"),
+        Uri.encodeFull("$network/billing/users/current-bill/"),
         headers: {
           "Accept":"application/json",
           "Authorization": "Token ${token} "
@@ -68,12 +69,20 @@ class _HomePageState extends State<HomePage> {
     return "Success!";
   }
 
+  List<Notifications> _notifications; 
 
 @override
   void initState(){
     super.initState();
 
-    is_loading = true; 
+    Service.getNotifs().then((notifications){
+      
+      setState(() {
+        _notifications = notifications; 
+        is_loading = false; 
+
+      });
+    });
 
     this.getBill();
    
@@ -155,19 +164,20 @@ class _HomePageState extends State<HomePage> {
       ),
       SliverList(delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index){
+          Notifications notification = _notifications[index]; 
           return  Card(
             child: Column(children: [
               ListTile(
                 leading: Icon(
                   Icons.message, 
                 ), 
-                title: Text('Overdue alert', style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text('You bill is overdue'),
+                title: Text(notification.title, style: TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: Text(notification.subtitle),
               )
             ],) ,
           );
         },
-        childCount: 30, 
+        childCount: _notifications == null ? 0: _notifications.length, 
       ),)
       ],
     )
