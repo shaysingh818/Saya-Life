@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/Bill.dart';
+import '../models/Charges.dart'; 
 import '../models/Notifications.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -37,6 +38,26 @@ class Service{
     }catch(e){
       return List<Bill>(); 
 
+    }
+
+  }
+
+  static Future<List<Charges>> getBillCharges(int pk) async {
+    try {
+      final response = await http.get('$url/billing/users/bill-charges/$pk/', headers: {
+         "Accept":"application/json",
+          "Authorization": "Token $auth_token"
+
+      });
+      if(response.statusCode == 200){
+        final List<Charges> charges = chargesFromJson(response.body);
+        return charges;
+      }else{
+        return List<Charges>(); 
+      }
+
+    }catch(e){
+      return List<Charges>(); 
     }
 
   }

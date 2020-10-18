@@ -1,13 +1,6 @@
-Set up the notification system
-Send notification evertime a bill is generated
-Send Notifications if bill is overdue
-Need an endpoint to get all notifications sent to the user
-Create a property detail page
-Delete the HCF attribute for profile
-
-
-build billing detail page
-	We want to view the charges
-	Design a good billing detail page
-
-
+Things I want to get done today
+	* Billing detail page ~ Make it identical to what naveen wants
+	* Format the date properly for billing
+	* Make it view the charges and everything	
+	* If you have time add the tier calculator
+	

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:io'; 
-import './models/Bill.dart';  
+import './models/Charges.dart';  
 import './api/Posting.dart'; 
 import './api/Service.dart';
 
@@ -52,14 +52,13 @@ class _BillingDetailPageState extends State<BillingDetailPage> {
 
     final jsonData = json.decode(response.body);
     print(jsonData);
-/**
- *  setState(() {
+
+   setState(() {
       tier_water_usage = jsonData["tier_water_usage"];
-      print(image_url); 
-      name = jsonData["name"];
-      followstatus = jsonData["follow_status"];
+      service_charge_total = jsonData["service_charge_total"]; 
+      total_amount = jsonData["total_amount"]; 
     });
- */
+
    
 
 
@@ -73,7 +72,7 @@ class _BillingDetailPageState extends State<BillingDetailPage> {
 
 
 
-  //List<Playlists> _playlists; 
+  List<Charges> _charges; 
 
 
 
@@ -83,17 +82,17 @@ class _BillingDetailPageState extends State<BillingDetailPage> {
 
     is_loading = true; 
 
-    //this.getArtist();
-   
-   /**
-    * Service.getPlaylists().then((playlists){
+    this.getArtist();
+
+    Service.getBillCharges(pk).then((charges){
+      
       setState(() {
-        _playlists = playlists; 
+        _charges = charges; 
         is_loading = false; 
+
       });
     });
-    */
-
+ 
     
 
 
@@ -135,7 +134,7 @@ class _BillingDetailPageState extends State<BillingDetailPage> {
                               color: Colors.blue, 
                             ), 
                             title: Text("Total amount due: ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-                            trailing:  Text("123 Dollars", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)), 
+                            trailing:  Text(total_amount, style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)), 
                           ),
                         ListTile(
                             leading: Icon(
@@ -143,19 +142,68 @@ class _BillingDetailPageState extends State<BillingDetailPage> {
                               color: Colors.blue, 
                             ), 
                             title: Text("Service Charge Amount: ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-                            trailing: Text("123 Dollars", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)), 
+                            trailing: Text(service_charge_total, style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)), 
                           ),
                           ListTile(
                             leading: Icon(
                               Icons.monetization_on, 
                               color: Colors.blue, 
                             ), 
-                            title: Text("Water Usage Charge Amount: ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-                            trailing: Text("123 Dollars", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)), 
+                            title: Text("Tier Usage: ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                            trailing: Text(tier_water_usage, style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)), 
                           ),
                         ],
                       )
                     ),
+
+                     Card(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            leading: Icon(
+                              Icons.water_damage_rounded,  
+                              color: Colors.blue, 
+                            ), 
+                            title: Text("Water Usage Charge Chart ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                            trailing: Icon(
+                              Icons.water_damage, 
+                              color: Colors.grey, 
+                            )
+                          ),
+                        Card(
+                          color: Colors.lightBlue[100],
+                          child: ListTile(
+                            title: Text("Tier 1 ~ Low Volume ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal)),
+                            trailing: Text("9 HCF/9.49", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)), 
+                          ),
+                        ),
+                         Card(
+                          color: Colors.lightBlue[200],
+                          child: ListTile(
+                            title: Text("Tier 2 ~ Low Volume ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal)),
+                            trailing: Text("18 HCF/10.49", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)), 
+                          ),
+                        ),
+                         Card(
+                          color: Colors.lightBlue[300],
+                          child: ListTile(
+                            title: Text("Tier 3 ~ High Volume ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal)),
+                            trailing: Text("21 HCF/10.49", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)), 
+                          ),
+                        ),
+                         Card(
+                          color: Colors.lightBlue[400],
+                          child: ListTile(
+                            title: Text("Tier 4 ~ High Volume ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal)),
+                            trailing: Text("26 HCF/12.49", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)), 
+                          ),
+                        )
+
+                         
+                        ],
+                      )
+                    ),
+
 
                     Card(
                       child: Column(
@@ -171,25 +219,42 @@ class _BillingDetailPageState extends State<BillingDetailPage> {
                               color: Colors.grey, 
                             )
                           ),
-                        ListTile(
-                            title: Text("Service Charge Amount: ", style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal)),
-                            trailing: Text("123 Dollars", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)), 
-                          ),
-                          ListTile(
-                           
-                            title: Text("Water Usage Charge Amount: ", style: TextStyle(color: Colors.black)),
-                            trailing: Text("123 Dollars", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)), 
-                          ),
+                        
+                        
                         ],
                       )
                     ),
 
+                    
+
+                   
                   ],
                 )
                 
               ),
 
+              
+
             ),
+
+          SliverList(delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index){
+              Charges charge = _charges[index]; 
+              return  Card(
+                child: Column(children: [
+                  ListTile(
+                  
+                    leading: Icon(
+                      Icons.message, 
+                    ), 
+                    title: Text(charge.title, style: TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text('Total: ' + charge.chargeAmount ),
+                  )
+                ],) ,
+              );
+            },
+            childCount: _charges == null ? 0: _charges.length, 
+          ),), 
             
           ],
         )

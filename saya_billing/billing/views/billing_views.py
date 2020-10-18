@@ -66,6 +66,21 @@ class BillView(APIView):
         return Response({"Message": "Bill was deleted"})
 
 
+
+class BillChargesView(APIView):
+
+    def get_object(self, pk): 
+        try:
+            return Bill.objects.get(pk=pk)
+        except Bill.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        bill = self.get_object(pk)
+        charges = bill.charges.all()
+        serializer = ViewChargeSerializer(charges, many=True)
+        return Response(serializer.data) 
+
 class UserProperty(APIView): 
 
     def get_object(self, pk): 

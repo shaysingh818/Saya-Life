@@ -15,6 +15,8 @@ user_urlpatterns = [
     url(r'^property/(?P<pk>[\w-]+)/$', views.UserProperty.as_view(), name='property-user'),
     url(r'^bill-user/(?P<pk>[\w-]+)/$', views.BillUser.as_view(), name='bill-user'),
 
+    url(r'^bill-charges/(?P<pk>[\w-]+)/$', views.BillChargesView.as_view(), name='bill-charges-view'),
+
 ]
 
 property_urlpatterns = [

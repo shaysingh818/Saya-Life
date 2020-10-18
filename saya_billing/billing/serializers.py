@@ -53,12 +53,10 @@ class CreateChargeSerializer(serializers.ModelSerializer):
 
 class ViewBillSerializer(serializers.ModelSerializer):
 
-    charges = serializers.SlugRelatedField(many=True, read_only=True,  slug_field='title')
 
     class Meta:
         model = Bill
-        fields = ('date_bill_prepared', 'tier_water_usage','service_charge_total','total_amount', 'due_date', 'id', 'charges')
-
+        fields = ('date_bill_prepared', 'tier_water_usage','service_charge_total','total_amount', 'due_date', 'id')
 
 
 class ViewPropertySerializer(serializers.ModelSerializer):

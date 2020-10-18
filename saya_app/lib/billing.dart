@@ -55,21 +55,7 @@ class _BillingPageState extends State<BillingPage> {
           SliverToBoxAdapter(
             child: Center(
         child: Column(children: [
-          SizedBox(
-            height: 10 ,
-          ),
-
-          Card(child: Column(children: [
-            Text('View your Bills'),
-            ListTile(
-              leading: Icon(
-                Icons.money, 
-              ),
-              title: Text('Total paid'),
-              subtitle: Text('Contact your water provider for any questions'),
-            ),
-            
-          ],),)
+         
          
          
           ],  

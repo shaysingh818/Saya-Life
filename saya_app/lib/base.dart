@@ -51,6 +51,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(title: Text(
         'Saya Billing', style: TextStyle(color: Colors.black),),
+        leading: Container(),
         backgroundColor: Colors.white,
         ),
       
@@ -61,10 +62,10 @@ class _MainPageState extends State<MainPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home,
+              Icons.calculate, 
               color: Colors.grey,
             ),
-            title: Text('Property', style: TextStyle(color: Colors.grey),),
+            title: Text('Calculator', style: TextStyle(color: Colors.grey),),
           ),
           BottomNavigationBarItem(
             icon: Icon(
