@@ -1,5 +1,5 @@
 # Gateway Server
-Gateway communicates with all the meters. Our server needs to get the reports from these gateways and keep a persistent connection with them. 
+Gateway communicates with all the meters. Server needs to get the reports from these gateways and keep a persistent connection with them. 
 
 # Features
 DONE: Polling reading/writing repsonses and holding them in the server
