@@ -1,4 +1,3 @@
-
 package main
 
 import (
@@ -7,7 +6,8 @@ import (
 	"log"
 	"net/http"
 	"io/ioutil"
-    "io"
+    //"io"
+	"time"
 )
 
 
@@ -15,7 +15,7 @@ type Gateway struct {
 	NetIp         string
 	MacAddr       string
 	Id            int
-	Response      chan string
+	Channel       chan string
 	ClientRequest *http.Request
 }
 
@@ -56,16 +56,23 @@ func CheckDupes(address string) bool {
 func (g *Gateway) checkRequest(){
 	select{
 		case <-g.ClientRequest.Context().Done():
-			fmt.Println("Gateway Offline: ", g) 
+			fmt.Println("GW DISCONNECT: ", g)
+			var test = <-g.ClientRequest.Context().Done()
+			fmt.Println(test) 
 		default:
-			fmt.Println(" ")
+			fmt.Println("All Good")
 	}
 }
 
+func checkAll(){
+	for _, value := range gateways{
+		value.checkRequest()
+	}
+}
 
 func addGateway(gAddress, gMac string, gId int, gReq *http.Request) Gateway {
-	gResponse := make(chan string)
-	instance := Gateway{gAddress, gMac, gId, gResponse, gReq}
+	gChannel := make(chan string)
+	instance := Gateway{gAddress, gMac, gId, gChannel, gReq}
 	return instance
 }
 
@@ -83,35 +90,45 @@ func pushHandler(w http.ResponseWriter, req *http.Request){
 	for _, value := range gateways{
 		if value.MacAddr == mac {
 			fmt.Println("Pushing to: ", mac)
-			value.Response <- string(body)
+			value.Channel <- string(body)
 		}
 	}
 }
 
-
-//io.WriteString(w, <-client.Channel //sends written response
-
-
-
 //this is where you can check to see if the request is dead
 func pollRequest(w http.ResponseWriter, r *http.Request) {
 
-	requestAddr := r.FormValue("address")
-	requestMacAddr := r.FormValue("mac-address")
-	clientInstance := addGateway(requestAddr, requestMacAddr, gatewayCount, r)
+	//requestAddr := r.FormValue("address")
+	//requestMacAddr := r.FormValue("mac-address")
+	//clientInstance := addGateway(requestAddr, requestMacAddr, gatewayCount, r)
 
+	select{
+		case <-time.After(10 * time.Second):
+			w.Write([]byte("request processed"))
+
+		case <-r.Context().Done():
+			fmt.Println("Request cancelled")
+	}
+
+	/**
 	if CheckDupes(clientInstance.MacAddr) == false {
 		gateways = append(gateways, clientInstance)
 		gatewayCount += 1
 		fmt.Println("Polling a response from: ", requestMacAddr)
-		io.WriteString(w, <-clientInstance.Response)
+		io.WriteString(w, <-clientInstance.Channel)
 	}else{
 		fmt.Fprintf(w, "Cannot create client || Client exists ")
 	}
 
+	*/
+
 }
 
-//create a channel for active request, call it requestsChannel
+func ViewGateways(w http.ResponseWriter, req *http.Request){
+    for _, value := range gateways{
+        fmt.Println(value)
+    }
+}
 
 
 
@@ -121,7 +138,8 @@ func serverHandler(Port string) {
 	serverRouter := mux.NewRouter().StrictSlash(true)
 	serverRouter.HandleFunc("/poll", pollRequest).Methods("POST")
     serverRouter.HandleFunc("/push/{macAddr}", pushHandler).Methods("POST")
-	log.Fatal(http.ListenAndServe(myPort, serverRouter))
+    serverRouter.HandleFunc("/view", ViewGateways).Methods("GET")
+	go log.Fatal(http.ListenAndServe(myPort, serverRouter))
 }
 
 func main() {
