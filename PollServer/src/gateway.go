@@ -8,13 +8,16 @@ import(
 
 
 type Gateway struct {
-	NetIp         string
-	MacAddr       string
-	Id            int
-	Channel       chan string
-	ClientRequest *http.Request
+	NetIp         string `json:"address"`
+	MacAddr       string `json:"mac-address"`
+	Id            int `json:"id"`
+	Channel       chan string `json:"channel"`
+	ClientRequest *http.Request `json:"request"`
 }
 
+//json format
+//real time
+//data anaytics
 
 var gateways []Gateway
 var gatewayCount = 0
@@ -54,7 +57,7 @@ func (g *Gateway) checkRequest(){
 		case <-g.ClientRequest.Context().Done():
 			fmt.Println("GW DISCONNECT: ", g)
 			var test = <-g.ClientRequest.Context().Done()
-			fmt.Println(test) 
+			fmt.Println(test)
 		default:
 			fmt.Println("All Good")
 	}

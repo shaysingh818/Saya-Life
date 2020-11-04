@@ -10,8 +10,6 @@ import(
 
 )
 
-
-
 func pushHandler(w http.ResponseWriter, req *http.Request){
 	params := mux.Vars(req)
 
@@ -28,8 +26,8 @@ func pushHandler(w http.ResponseWriter, req *http.Request){
 			value.Channel <- string(body)
 		}
 	}
-
 }
+
 
 //this is where you can check to see if the request is dead
 func pollRequest(w http.ResponseWriter, r *http.Request) {
