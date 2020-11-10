@@ -1,4 +1,4 @@
-#Poll a response
+# Poll a response
 Send a request as client gateway, server will hold the response and keep the connection alive. If a duplicate client makes a request, server will close previous request
 
 HTTP POST
@@ -9,19 +9,20 @@ PARAMS
 	mac-address: <MAC ADDR/Client Identifier>
 }
 
-#PUSH a response / Send gateway command
+# PUSH a response / Send gateway command
 
 HTTP POST
 http://127.0.0.1:8080/push/{MACADDR}
 
 
-#SEND report to gateway
+# SEND report to gateway
 
 HTTP POST
 http://127.0.0.1:8080/nano/{MACADDR}
 
 PARAMS
 
+```
 {
 	   "TotalFlow":    "11812.97932",
 	        "Flow":       "15.32200",
@@ -45,5 +46,5 @@ PARAMS
 	          "Id":            "373",
 	"SendInterval":           "3600"
 }
-
+```
 
